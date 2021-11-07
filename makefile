@@ -10,27 +10,26 @@ install:
 activate:
 	pipenv shell
 
-run:
-	python manage.py runserver
+bash:
+	docker exec -it reservation_web_container bash
 
 test:
-	python manage.py test
+	docker exec -it reservation_web_container python manage.py test
 
 migration:
-	python manage.py makemigrations
+	docker exec -it reservation_web_container python manage.py makemigrations
 
 migrate:
-	python manage.py migrate
+	docker exec -it reservation_web_container python manage.py migrate
 
 superuser:
 	python manage.py createsuperuser
 
 up:
-	docker-compose build
-	docker-compose up -d
+	docker compose up -d
 
 down:
-	docker-compose down
+	docker compose down
 
 rebuild:
-	docker-compose build --no-cache
+	docker compose build --no-cache
