@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3.10.0
+FROM python:3.10
 
 # set work directory
 WORKDIR /usr/src/app
@@ -11,8 +11,8 @@ ENV PYTHONUNBUFFERED 1
 # install dependencies
 RUN pip install --upgrade pip
 RUN pip install pipenv
-COPY ./Pipfile /app/Pipfile
-RUN pipenv install --skip-lock --dev
+COPY Pipfile Pipfile.lock ./
+RUN pipenv install --system
 
 # copy project
 COPY . /usr/src/app/
