@@ -2,25 +2,20 @@ version: '3.5'
 
 services:
   web:
-    build:
-      context: ./
-      dockerfile: Dockerfile
+    build: .
     container_name: reservation_web_container
-    environment:
-      DEBUG: 'true'
-      DB_HOST: db
     command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8100"
     volumes:
       - ./:/usr/src/app/
     ports:
       - "8100:8100"
     env_file:
-      - ./.env.dev
+      - ./.env
     depends_on:
       - db
   db:
     container_name: reservation_postgres_container
-    image: "postgres:13.4"
+    image: "postgres:14"
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     ports:
