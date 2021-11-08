@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   web:
-    build: .
+    build: ./
     container_name: reservation_web_container
     command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8100"
     volumes:
@@ -13,11 +13,25 @@ services:
       - ./.env
     depends_on:
       - db
+  debug:
+    build: ./
+    container_name: reservation_debug_container
+    command: sleep infinity
+    volumes:
+      - ./:/usr/src/app/
+    ports:
+      - "8101:8101"
+    env_file:
+      - ./.env
+    stop_signal: SIGINT
+    restart: unless-stopped
+    depends_on:
+      - db
   db:
     container_name: reservation_postgres_container
     image: "postgres:14"
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - ./.docker/data/postgres_data:/var/lib/postgresql/data/
     ports:
       - "5435:5432"
     environment:
