@@ -10,20 +10,21 @@ install:
 activate:
 	pipenv shell
 
+debug_container := $(shell docker ps | grep reservation_debug_container | awk '{print $$1}')
 bash:
-	docker exec -it reservation_web_container bash
+	docker exec -it $(debug_container) bash
 
 test:
-	docker exec -it reservation_web_container python manage.py test
+	docker exec -it $(debug_container) python manage.py test
 
 migration:
-	docker exec -it reservation_web_container python manage.py makemigrations
+	docker exec -it $(debug_container) python manage.py makemigrations
 
 migrate:
-	docker exec -it reservation_web_container python manage.py migrate
+	docker exec -it $(debug_container) python manage.py migrate
 
 superuser:
-	python manage.py createsuperuser
+	docker exec -it $(debug_container) python manage.py createsuperuser
 
 up:
 	docker compose up -d
