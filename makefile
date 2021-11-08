@@ -33,3 +33,32 @@ down:
 
 rebuild:
 	docker compose build --no-cache
+
+lint: black isort pylint
+
+isort:
+	@echo
+	@echo "Start Running isort..."
+	@echo "========================"
+	isort --atomic .
+	@echo "========================"
+	@echo "Stop Running isort..."
+	@echo
+
+black:
+	@echo
+	@echo "Start Running black..."
+	@echo "========================"
+	black .
+	@echo "========================"
+	@echo "Stop Running black..."
+	@echo
+
+pylint:
+	@echo
+	@echo "Start Running pylint..."
+	@echo "========================"
+	pylint *.py --load-plugins pylint_django --django-settings-module=reservation.settings --ignore=manage.py
+	@echo "========================"
+	@echo "Stop Running pylint..."
+	@echo
