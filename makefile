@@ -62,3 +62,12 @@ pylint:
 	@echo "========================"
 	@echo "Stop Running pylint..."
 	@echo
+
+mypy:
+	@echo
+	@echo "Start Running mypy..."
+	@echo "========================"
+	mypy .
+	@echo "========================"
+	@echo "Stop Running mypy..."
+	@echo
