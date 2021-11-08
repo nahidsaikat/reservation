@@ -115,6 +115,12 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# Rest Framework
+REST_FRAMEWORK = {
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
+}
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
