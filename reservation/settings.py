@@ -37,9 +37,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     # local apps
     "employees",
+    "rooms"
 ]
 
 MIDDLEWARE = [
@@ -116,9 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Rest Framework
-REST_FRAMEWORK = {
-    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
-}
+REST_FRAMEWORK = {"TEST_REQUEST_DEFAULT_FORMAT": "json"}
 
 
 # Internationalization
@@ -145,4 +143,4 @@ STATIC_URL = "/static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTH_USER_MODEL = 'employees.Employee'
+AUTH_USER_MODEL = "employees.Employee"

@@ -9,6 +9,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     """
     A viewset for viewing and editing employees.
     """
+
     serializer_class = EmployeeSerializer
     queryset = Employee.objects.all()
     # permission_classes = [IsAuthenticated]
