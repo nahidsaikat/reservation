@@ -91,3 +91,12 @@ class RoomReservationTest(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
+
+    def test_list_room_reservation(self):
+        rr1 = RoomReservationFactory()
+        rr2 = RoomReservationFactory()
+        response = self.client.get(
+            f'{reverse("room_reservation:room_reservation-list")}'
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 2)
