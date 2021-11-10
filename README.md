@@ -17,7 +17,6 @@ Before running the application please ensure that following are available
 in the system,
 * docker
 * docker compose
-* postgresql
 
 After that run this command
 * `mkdir -p .docker/data/postgres_data`
@@ -35,6 +34,7 @@ Follow the steps below,
 * `mkdir -p .docker/data/postgres_data` (This will require if you use docker compose or makefile)
 * `pipenv install`
 * `pipenv shell`
+* `docker compose up db`
 * `python manage.py migrate`
 * `python manage.py runserver`
 * `python manage.py test`    (To run the test)
