@@ -7,12 +7,16 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from employees.factory import EmployeeFactory
+from employees.models import Employee
 from room_reservations.factory import RoomReservationFactory
 from room_reservations.models import RoomReservation
 
 
 class RoomReservationTest(APITestCase):
     def setUp(self):
+        user = Employee.objects.create(email='user@example.com')
+        self.client.force_authenticate(user=user)
+
         self.employee = EmployeeFactory()
         self.valid_payload = {
             "title": "Title 1",

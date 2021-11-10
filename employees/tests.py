@@ -5,11 +5,15 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
+from employees.factory import EmployeeFactory
 from employees.models import Employee
 
 
 class EmployeeTest(APITestCase):
     def setUp(self):
+        user = Employee.objects.create(email='user@example.com')
+        self.client.force_authenticate(user=user)
+
         self.valid_payload = {"email": "username@email.com", "password": "password1234"}
         self.invalid_payload = {"password": "password1234"}
 
@@ -32,13 +36,9 @@ class EmployeeTest(APITestCase):
 
     def test_update_employee(self):
         data = {"first_name": "name"}
-        response1 = self.client.post(
-            reverse("employee:employee-list"),
-            data=json.dumps(self.valid_payload),
-            content_type="application/json",
-        )
+        employee = EmployeeFactory()
         response = self.client.patch(
-            reverse("employee:employee-detail", args=[response1.data.get("id")]),
+            reverse("employee:employee-detail", args=[employee.id]),
             data=json.dumps(data),
             content_type="application/json",
         )
@@ -46,29 +46,21 @@ class EmployeeTest(APITestCase):
         self.assertEqual(response.data.get("first_name"), data.get("first_name"))
 
     def test_employee_details(self):
-        response1 = self.client.post(
-            reverse("employee:employee-list"),
-            data=json.dumps(self.valid_payload),
-            content_type="application/json",
-        )
+        employee = EmployeeFactory()
         response = self.client.get(
-            reverse("employee:employee-detail", args=[response1.data.get("id")])
+            reverse("employee:employee-detail", args=[employee.id])
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data.get("id"), response1.data.get("id"))
-        self.assertEqual(response.data.get("email"), response1.data.get("email"))
+        self.assertEqual(response.data.get("id"), employee.id)
+        self.assertEqual(response.data.get("email"), employee.email)
 
     def test_delete_employee(self):
-        response1 = self.client.post(
-            reverse("employee:employee-list"),
-            data=json.dumps(self.valid_payload),
-            content_type="application/json",
-        )
+        employee = EmployeeFactory()
         employee_count = Employee.objects.count()
-        self.assertEqual(employee_count, 1)
+        self.assertEqual(employee_count, 2)
         response = self.client.delete(
-            reverse("employee:employee-detail", args=[response1.data.get("id")])
+            reverse("employee:employee-detail", args=[employee.id])
         )
         employee_count = Employee.objects.count()
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(employee_count, 0)
+        self.assertEqual(employee_count, 1)

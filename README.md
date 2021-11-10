@@ -20,7 +20,11 @@ in the system,
 * postgresql
 
 After that run this command
-`make up`
+* `mkdir -p .docker/data/postgres_data`
+* `make up`
+* `make superuser` (Create a super user by providing email and password)
+ 
+The application will be running on `http://localhost:8100/`
 
 
 ## Instructions for development environment
@@ -28,6 +32,7 @@ For the development you will need to have `pyenv` and `pipenv` already installed
 Follow the steps below,
 * `git clone https://github.com/nahidsaikat/reservation.git`
 * `cd reservation`
+* `mkdir -p .docker/data/postgres_data` (This will require if you use docker compose or makefile)
 * `pipenv install`
 * `pipenv shell`
 * `python manage.py migrate`

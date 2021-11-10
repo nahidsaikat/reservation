@@ -5,11 +5,15 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
+from employees.models import Employee
 from rooms.models import Room
 
 
 class RoomTest(APITestCase):
     def setUp(self):
+        user = Employee.objects.create(email='user@example.com')
+        self.client.force_authenticate(user=user)
+
         self.valid_payload = {"name": "Room 1"}
         self.invalid_payload = {}
 

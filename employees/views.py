@@ -12,4 +12,4 @@ class EmployeeViewSet(viewsets.ModelViewSet):
 
     serializer_class = EmployeeSerializer
     queryset = Employee.objects.all()
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]

@@ -23,7 +23,7 @@ class RoomReservationViewSet(viewsets.ModelViewSet):
     queryset = RoomReservation.objects.all()
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = RoomReservationFilter
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     @action(detail=True, methods=['post'])
     def cancel(self, request, pk=None):
