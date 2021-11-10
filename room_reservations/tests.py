@@ -73,3 +73,12 @@ class RoomReservationTest(APITestCase):
         room_reservation_count = RoomReservation.objects.count()
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(room_reservation_count, 0)
+
+    def test_cancel_room_reservation(self):
+        rr = RoomReservationFactory()
+        response = self.client.post(
+            reverse("room_reservation:room_reservation-cancel", args=[rr.id])
+        )
+        db_rr = RoomReservation.objects.get(id=rr.id)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue(db_rr.is_cancelled)
