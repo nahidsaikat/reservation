@@ -82,3 +82,12 @@ class RoomReservationTest(APITestCase):
         db_rr = RoomReservation.objects.get(id=rr.id)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue(db_rr.is_cancelled)
+
+    def test_filter_by_employee_room_reservation(self):
+        rr1 = RoomReservationFactory()
+        rr2 = RoomReservationFactory()
+        response = self.client.get(
+            f'{reverse("room_reservation:room_reservation-list")}?employee={rr1.employee.id}'
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)

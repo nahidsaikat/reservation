@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # 3rd party
+    'rest_framework',
+    'django_filters',
     # local apps
     "employees",
     "rooms",
@@ -117,7 +120,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Rest Framework
-REST_FRAMEWORK = {"TEST_REQUEST_DEFAULT_FORMAT": "json"}
+REST_FRAMEWORK = {
+    "TEST_REQUEST_DEFAULT_FORMAT": "json",
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}
 
 
 # Internationalization
